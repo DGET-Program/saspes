@@ -72,6 +72,9 @@ function analytics_message (action_input) {
     const href = window.location.href.split("?")[0];
     browser.runtime.sendMessage({ action: "analytics_send", args: { url: href, action: action_input } });
 }
+function save_grades_locally (username, courses) {
+    browser.storage.local.set({ username: courses });
+}
 function main_page () {
     const student_name = document.querySelector('#userName').querySelector('span').innerText;
     let second_semester = false;
@@ -152,6 +155,7 @@ function main_page () {
                 }
             });
     }
+    save_grades_locally(student_name, courses);
     // Hypo Grade Calculator
     const HypoGradesDiv = document.createElement('div');
     HypoGradesDiv.classList.add("hypo-grade-div-fixed");
